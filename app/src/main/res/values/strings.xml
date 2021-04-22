@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">My Weight Controller</string>
+    <string name="weight">Weight</string>
+    <string name="date">Date</string>
+    <string name="save">Save</string>
+    <string name="empty_weight">The weight can not be empty</string>
+    <string name="weight_not_number">The weight must be a number</string>
+    <string name="weight_too_small">The weight must be greater than 0</string>
+    <string name="delete">Delete</string>
+</resources>

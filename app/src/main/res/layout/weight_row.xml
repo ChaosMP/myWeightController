@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/weightTableRow"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:textSize="25sp"
+        android:layout_gravity="center"
+        android:gravity="center"/>
+
+    <TextView
+        android:id="@+id/weightTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="5"
+        android:textSize="25sp"
+        android:layout_gravity="center"
+        android:gravity="center"/>
+
+    <ImageView
+        android:id="@+id/deleteWeightRecordImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_baseline_delete_forever_40"
+        android:contentDescription="@string/delete"/>
+
+</TableRow>

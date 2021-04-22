@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Контроль веса</string>
+    <string name="weight">Вес</string>
+    <string name="date">Дата</string>
+    <string name="save">Сохранить</string>
+    <string name="empty_weight">Вес должен быть указан</string>
+    <string name="weight_not_number">Вес должен быть числом</string>
+    <string name="weight_too_small">Вес должен быть больше 0</string>
+    <string name="delete">Удалить</string>
+</resources>
