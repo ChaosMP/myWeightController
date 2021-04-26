@@ -69,4 +69,23 @@
 
     </ScrollView>
 
+    <ImageView
+        android:id="@+id/goalAchievedBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:src="@color/goal_achieve_background"
+        android:visibility="gone"
+        android:onClick="goalAchievedClick"/>
+
+    <ImageView
+        android:id="@+id/goalAchievedImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/your_goal_achieved"
+        android:alpha="0"
+        android:visibility="gone"
+        android:onClick="goalAchievedClick"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

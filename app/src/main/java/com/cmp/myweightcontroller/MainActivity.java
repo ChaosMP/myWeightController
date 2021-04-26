@@ -1,16 +1,25 @@
 package com.cmp.myweightcontroller;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -18,6 +27,7 @@ import android.widget.Toast;
 
 import com.cmp.myweightcontroller.app.WeightControllerApp;
 import com.cmp.myweightcontroller.model.WeightRecord;
+import com.cmp.myweightcontroller.utils.WeightControllerUtils;
 
 import java.util.Calendar;
 import java.util.List;
@@ -27,11 +37,17 @@ public class MainActivity extends AppCompatActivity {
     private EditText weightEditText;
     private EditText dateEditText;
     private TableLayout weightTableLayout;
-    private ScrollView weightScrollView;
+    private ImageView goalAchievedImageView;
+    private ImageView goalAchievedBackground;
 
     private int selectedYear;
     private int selectedMonth;
     private int selectedDay;
+
+    private AlertDialog goalAlertDialog;
+    private AlertDialog newGoalAlertDialog;
+
+    private SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +57,90 @@ public class MainActivity extends AppCompatActivity {
         weightEditText = findViewById(R.id.weightEditText);
         dateEditText = findViewById(R.id.dateEditText);
         weightTableLayout = findViewById(R.id.weightTableLayout);
-        weightScrollView = findViewById(R.id.weightScrollView);
+        goalAchievedImageView = findViewById(R.id.goalAchievedImageView);
+        goalAchievedBackground = findViewById(R.id.goalAchievedBackground);
+
+        preferences = getSharedPreferences(WeightControllerUtils.APP_PREFERENCES, Context.MODE_PRIVATE);
+
+        goalAlertDialog = new AlertDialog.Builder(MainActivity.this).create();
+        goalAlertDialog.setOnShowListener(new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface dialog) {
+                Window win = goalAlertDialog.getWindow();
+                win.setContentView(R.layout.goal_layout);
+                EditText goalValueEditText = win.findViewById(R.id.goalValueEditText);
+                if (preferences != null) {
+                    double weightGoal = preferences.getFloat(WeightControllerUtils.WEIGHT_GOAL_FIELD, 0.0f);
+                    if (weightGoal != 0.0) {
+                        goalValueEditText.setText(String.valueOf(weightGoal));
+                    }
+                }
+                goalValueEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if (hasFocus) {
+                            win.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+                        }
+                    }
+                });
+                Button saveWeightGoalButton = win.findViewById(R.id.saveWeightGoalButton);
+                saveWeightGoalButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String goalStr = goalValueEditText.getText().toString().trim();
+                        if (goalStr != null && !goalStr.equals("")) {
+                            try {
+                                double weightGoal = Double.parseDouble(goalStr);
+                                if (weightGoal != 0.0) {
+                                    preferences.edit()
+                                            .putFloat(WeightControllerUtils.WEIGHT_GOAL_FIELD, (float) weightGoal)
+                                            .apply();
+                                    Toast.makeText(MainActivity.this, getString(R.string.goal_saved), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    preferences.edit()
+                                            .remove(WeightControllerUtils.WEIGHT_GOAL_FIELD)
+                                            .apply();
+                                }
+                            } catch(NumberFormatException e) {
+                                Toast.makeText(MainActivity.this, getString(R.string.goal_not_number), Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            preferences.edit()
+                                    .remove(WeightControllerUtils.WEIGHT_GOAL_FIELD)
+                                    .apply();
+                        }
+                        goalAlertDialog.dismiss();
+                    }
+                });
+            }
+        });
+
+        AlertDialog.Builder newGoalAlertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+        newGoalAlertDialogBuilder.setTitle(R.string.goal);
+        newGoalAlertDialogBuilder.setMessage(R.string.set_a_new_goal);
+        newGoalAlertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                goalAlertDialog.show();
+            }
+        });
+        newGoalAlertDialogBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                preferences.edit()
+                        .remove(WeightControllerUtils.WEIGHT_GOAL_FIELD)
+                        .apply();
+            }
+        });
+        newGoalAlertDialogBuilder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                preferences.edit()
+                        .remove(WeightControllerUtils.WEIGHT_GOAL_FIELD)
+                        .apply();
+            }
+        });
+        newGoalAlertDialog = newGoalAlertDialogBuilder.create();
 
         dateEditText.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,6 +191,26 @@ public class MainActivity extends AppCompatActivity {
                 loadWeightRecords();
             }
         }).start();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // выводим меню для отображения кнопки настроек
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.action_goal) {
+            goalAlertDialog.show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private boolean checkValue() {
@@ -149,6 +268,21 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
                     loadWeightRecords();
+
+                    double weightGoal = preferences.getFloat(WeightControllerUtils.WEIGHT_GOAL_FIELD, 0.0f);
+                    if (weightGoal != 0.0) {
+                        if (Double.parseDouble(weightEditText.getText().toString().trim()) <= weightGoal) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    goalAchievedBackground.setVisibility(View.VISIBLE);
+                                    goalAchievedImageView.setVisibility(View.VISIBLE);
+                                    goalAchievedImageView.animate().alpha(1.0f).setDuration(1000);
+                                }
+                            });
+                        }
+                    }
+
                 }
             }).start();
         }
@@ -199,5 +333,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public void goalAchievedClick(View view) {
+        goalAchievedImageView.setAlpha(0.0f);
+        goalAchievedImageView.setVisibility(View.GONE);
+        goalAchievedBackground.setVisibility(View.GONE);
+        newGoalAlertDialog.show();
     }
 }

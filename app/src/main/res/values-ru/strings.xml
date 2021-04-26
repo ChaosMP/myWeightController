@@ -7,4 +7,11 @@
     <string name="weight_not_number">Вес должен быть числом</string>
     <string name="weight_too_small">Вес должен быть больше 0</string>
     <string name="delete">Удалить</string>
+    <string name="set_a_goal">Поставить цель</string>
+    <string name="goal">Цель</string>
+    <string name="goal_not_number">Цель в весе должна быть числом</string>
+    <string name="goal_saved">Цель веса успешно сохранена</string>
+    <string name="set_a_new_goal">Поставить новую цель по весу?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
 </resources>
