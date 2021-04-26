@@ -337,6 +337,6 @@ public class MainActivity extends AppCompatActivity {
         goalAchievedImageView.setAlpha(0.0f);
         goalAchievedImageView.setVisibility(View.GONE);
         goalAchievedBackground.setVisibility(View.GONE);
-        showGoalDialog();
+        newGoalAlertDialog.show();
     }
 }
