@@ -75,14 +75,6 @@ public class MainActivity extends AppCompatActivity {
                         goalValueEditText.setText(String.valueOf(weightGoal));
                     }
                 }
-                goalValueEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                    @Override
-                    public void onFocusChange(View v, boolean hasFocus) {
-                        if (hasFocus) {
-                            win.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-                        }
-                    }
-                });
                 Button saveWeightGoalButton = win.findViewById(R.id.saveWeightGoalButton);
                 saveWeightGoalButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -121,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
         newGoalAlertDialogBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                goalAlertDialog.show();
+                showGoalDialog();
             }
         });
         newGoalAlertDialogBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -206,11 +198,17 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if(id == R.id.action_goal) {
-            goalAlertDialog.show();
+            showGoalDialog();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showGoalDialog() {
+        goalAlertDialog.show();
+        goalAlertDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE|WindowManager.LayoutParams.FLAG_ALT_FOCUSABLE_IM);
+        goalAlertDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
     }
 
     private boolean checkValue() {
@@ -339,6 +337,6 @@ public class MainActivity extends AppCompatActivity {
         goalAchievedImageView.setAlpha(0.0f);
         goalAchievedImageView.setVisibility(View.GONE);
         goalAchievedBackground.setVisibility(View.GONE);
-        newGoalAlertDialog.show();
+        showGoalDialog();
     }
 }
