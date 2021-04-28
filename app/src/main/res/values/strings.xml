@@ -14,4 +14,9 @@
     <string name="set_a_new_goal">Set a new weight goal?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="stats">Statistics</string>
+    <string name="month_progress">Progress for the month</string>
+    <string name="year_progress">Progress for the year</string>
+    <string name="all_progress">All-time progress</string>
+    <string name="error_load_stats_dates">Unexpected error while loading statistics, could not parse dates.</string>
 </resources>

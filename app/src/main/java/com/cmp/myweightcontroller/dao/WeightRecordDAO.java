@@ -20,4 +20,9 @@ public interface WeightRecordDAO {
     @Query("SELECT * FROM weight ORDER BY year DESC, month DESC, day DESC, id DESC")
     List<WeightRecord> getAllWeightRecords();
 
+    @Query("SELECT * FROM weight t WHERE (t.year > :year OR t.year = :year AND (t.month > :month OR t.month = :month AND t.day >= :day))" +
+            " AND t.id = (SELECT MAX(tt.id) FROM weight tt WHERE tt.year = t.year AND tt.month = t.month AND tt.day = t.day)" +
+            " ORDER BY t.year ASC, t.month ASC, t.day ASC, t.id ASC")
+    List<WeightRecord> getWeightRecordsAfter(int year, int month, int day);
+
 }

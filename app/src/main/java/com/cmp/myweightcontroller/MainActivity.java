@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
@@ -197,12 +198,20 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if(id == R.id.action_goal) {
+        if (id == R.id.action_goal) {
             showGoalDialog();
+            return true;
+        } else if (id == R.id.action_stats) {
+            toStatistics();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void toStatistics() {
+        Intent intent = new Intent(MainActivity.this, StatisticsActivity.class);
+        startActivity(intent);
     }
 
     private void showGoalDialog() {
