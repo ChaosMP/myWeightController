@@ -19,4 +19,8 @@
     <string name="year_progress">Progress for the year</string>
     <string name="all_progress">All-time progress</string>
     <string name="error_load_stats_dates">Unexpected error while loading statistics, could not parse dates.</string>
+    <string name="no_data_in_chart">No data</string>
+    <string name="weight_changes">Weight changes:</string>
+    <string name="min_weight">Minimum weight:</string>
+    <string name="max_weight">Maximum weight:</string>
 </resources>

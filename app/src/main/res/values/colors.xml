@@ -8,4 +8,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="goal_achieve_background">#8A010C29</color>
+    <color name="chart_line_color">#155503</color>
+    <color name="chart_circle_color">#155503</color>
+    <color name="light_green">#ADF897</color>
+    <color name="very_light_green">#E3F8DD</color>
+    <color name="dark_gray">#101010</color>
+    <color name="light_gray">#454545</color>
 </resources>

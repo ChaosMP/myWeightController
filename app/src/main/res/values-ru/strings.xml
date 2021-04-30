@@ -19,4 +19,8 @@
     <string name="year_progress">Прогресс за год</string>
     <string name="all_progress">Прогресс за все время</string>
     <string name="error_load_stats_dates">Непредвиденная ошибка при загрузке статистики, не получилось разобрать даты.</string>
+    <string name="no_data_in_chart">Недостаточно данных для графика</string>
+    <string name="weight_changes">Изменение веса:</string>
+    <string name="min_weight">Минимальный вес:</string>
+    <string name="max_weight">Максимальный вес:</string>
 </resources>
