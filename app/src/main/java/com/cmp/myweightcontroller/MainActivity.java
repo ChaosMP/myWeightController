@@ -305,7 +305,8 @@ public class MainActivity extends AppCompatActivity {
 
                 weightTableLayout.removeAllViews();
 
-                for (WeightRecord record : weightRecordList) {
+                for (int i = 0; i < weightRecordList.size(); i++) {
+                    WeightRecord record = weightRecordList.get(i);
                     View rowView = getLayoutInflater().inflate(R.layout.weight_row, null);
                     TableRow newRow = (TableRow) rowView.findViewById(R.id.weightTableRow);
                     TextView dateTextView = newRow.findViewById(R.id.dateTextView);
@@ -315,7 +316,19 @@ public class MainActivity extends AppCompatActivity {
                             + (record.getMonth() > 8 ? (record.getMonth() + 1) : "0" + (record.getMonth() + 1)) + "."
                             + record.getYear();
                     dateTextView.setText(dateStr);
-                    weightTextView.setText(String.valueOf(record.getWeight()));
+                    StringBuilder tmpStrBuilder = new StringBuilder();
+                    tmpStrBuilder.append(record.getWeight());
+                    tmpStrBuilder.append(" (");
+                    if (i == weightRecordList.size() - 1 || weightRecordList.get(i + 1).getWeight() == record.getWeight()) {
+                        tmpStrBuilder.append(0.0);
+                    } else if (weightRecordList.get(i + 1).getWeight() < record.getWeight()) {
+                        tmpStrBuilder.append("+");
+                        tmpStrBuilder.append(Math.round((record.getWeight() - weightRecordList.get(i + 1).getWeight()) * 100) / 100f);
+                    } else if (weightRecordList.get(i + 1).getWeight() > record.getWeight()) {
+                        tmpStrBuilder.append(Math.round((record.getWeight() - weightRecordList.get(i + 1).getWeight()) * 100) / 100f);
+                    }
+                    tmpStrBuilder.append(")");
+                    weightTextView.setText(tmpStrBuilder.toString());
                     long id = record.getId();
                     deleteWeightRecordImageView.setOnClickListener(new View.OnClickListener() {
                         @Override

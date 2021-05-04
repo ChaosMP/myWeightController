@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NavUtils;
 import androidx.core.content.res.ResourcesCompat;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.Toast;
 
 import com.cmp.myweightcontroller.app.WeightControllerApp;
 import com.cmp.myweightcontroller.model.WeightRecord;
+import com.cmp.myweightcontroller.utils.WeightControllerUtils;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
@@ -42,6 +45,8 @@ public class StatisticsActivity extends AppCompatActivity {
     private TextView minWeightTextView;
     private TextView maxWeightTextView;
 
+    private SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +62,8 @@ public class StatisticsActivity extends AppCompatActivity {
         weightChangeTextView = findViewById(R.id.weightChangeTextView);
         minWeightTextView = findViewById(R.id.minWeightTextView);
         maxWeightTextView = findViewById(R.id.maxWeightTextView);
+
+        preferences = getSharedPreferences(WeightControllerUtils.APP_PREFERENCES, Context.MODE_PRIVATE);
 
         ArrayList<String> graphModes = new ArrayList<>();
         graphModes.add(getString(R.string.month_progress));
@@ -247,6 +254,17 @@ public class StatisticsActivity extends AppCompatActivity {
                             weightLineChart.invalidate();
 
                             weightChangeTextView.setText(String.valueOf(weightChange));
+                            double weightGoal = preferences.getFloat(WeightControllerUtils.WEIGHT_GOAL_FIELD, 0.0f);
+                            if (weightGoal != 0.0f
+                                    && Math.abs(weightGoal - dataSet.getValues().get(0).getY())
+                                        >= Math.abs(weightGoal - (dataSet.getValues().get(0).getY() + weightChange))) {
+                                weightChangeTextView.setTextColor(ResourcesCompat.getColor(getResources(), R.color.dark_green, null));
+                            } else if (weightGoal != 0.0f
+                                    && Math.abs(weightGoal - dataSet.getValues().get(0).getY())
+                                    < Math.abs(weightGoal - (dataSet.getValues().get(0).getY() + weightChange))) {
+                                weightChangeTextView.setTextColor(ResourcesCompat.getColor(getResources(), R.color.dark_red, null));
+                            }
+                            dataSet.getValues().get(0).getY();
                             minWeightTextView.setText(String.valueOf(dataSet.getYMin()));
                             maxWeightTextView.setText(String.valueOf(dataSet.getYMax()));
                         }
