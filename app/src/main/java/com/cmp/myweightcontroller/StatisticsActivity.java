@@ -224,7 +224,7 @@ public class StatisticsActivity extends AppCompatActivity {
                             ValueFormatter formatter = new ValueFormatter() {
                                 @Override
                                 public String getAxisLabel(float value, AxisBase axis) {
-                                    if ((int) value < dateLabels.size()) {
+                                    if ((int) value < dateLabels.size() && (int) value >= 0) {
                                         return dateFormat.format(dateLabels.get((int) value));
                                     } else {
                                         return "" + value;

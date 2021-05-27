@@ -7,7 +7,7 @@
         android:title="@string/set_a_goal"
         android:orderInCategory="1"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_baseline_emoji_events_50"
+        android:icon="@drawable/ic_baseline_emoji_events_50_green"
         />
 
     <item
@@ -15,7 +15,7 @@
         android:title="@string/stats"
         android:orderInCategory="2"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_baseline_query_stats_50"
+        android:icon="@drawable/ic_baseline_query_stats_50_green"
         />
 
 </menu>

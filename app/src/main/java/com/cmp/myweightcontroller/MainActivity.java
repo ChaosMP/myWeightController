@@ -9,11 +9,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -21,6 +23,8 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -62,6 +66,21 @@ public class MainActivity extends AppCompatActivity {
         goalAchievedBackground = findViewById(R.id.goalAchievedBackground);
 
         preferences = getSharedPreferences(WeightControllerUtils.APP_PREFERENCES, Context.MODE_PRIVATE);
+
+        TableLayout headTableLayout = findViewById(R.id.headTableLayout);
+
+        View headRowView = getLayoutInflater().inflate(R.layout.weight_row, null);
+        TableRow headRow = (TableRow) headRowView.findViewById(R.id.weightTableRow);
+        TextView headDateTextView = headRow.findViewById(R.id.dateTextView);
+        headDateTextView.setTypeface(headDateTextView.getTypeface(), Typeface.BOLD);
+        headDateTextView.setText(getString(R.string.date));
+        TextView headWeightTextView = headRow.findViewById(R.id.weightTextView);
+        headWeightTextView.setTypeface(headWeightTextView.getTypeface(), Typeface.BOLD);
+        headWeightTextView.setText(getString(R.string.weight));
+        ImageView headDeleteWeightRecordImageView = headRow.findViewById(R.id.deleteWeightRecordImageView);
+        headDeleteWeightRecordImageView.setVisibility(View.INVISIBLE);
+
+        headTableLayout.addView(headRowView);
 
         goalAlertDialog = new AlertDialog.Builder(MainActivity.this).create();
         goalAlertDialog.setOnShowListener(new DialogInterface.OnShowListener() {

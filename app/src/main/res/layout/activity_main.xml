@@ -8,67 +8,90 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:id="@+id/addNewWeightLayout"
+        android:id="@+id/mainLinearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="10dp">
 
-        <EditText
-            android:id="@+id/weightEditText"
+        <LinearLayout
+            android:id="@+id/addNewWeightLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:inputType="numberDecimal"
-            android:hint="@string/weight"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            android:importantForAutofill="no" />
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:background="@drawable/layout_background">
 
-        <EditText
-            android:id="@+id/dateEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/date"
-            android:focusable="false"
-            android:textSize="22sp"
-            android:inputType="date"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            android:importantForAutofill="no" />
+            <EditText
+                android:id="@+id/weightEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:inputType="numberDecimal"
+                android:hint="@string/weight"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:importantForAutofill="no" />
 
-        <Button
-            android:id="@+id/saveWeightButton"
+            <EditText
+                android:id="@+id/dateEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/date"
+                android:focusable="false"
+                android:textSize="22sp"
+                android:inputType="date"
+                android:gravity="center"
+                android:layout_margin="10dp"
+                android:importantForAutofill="no" />
+
+            <Button
+                android:id="@+id/saveWeightButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:text="@string/save"
+                android:layout_margin="10dp"
+                android:onClick="saveWeight"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/bottomLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="22sp"
-            android:text="@string/save"
-            android:layout_margin="10dp"
-            android:onClick="saveWeight"/>
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:background="@drawable/layout_background"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp">
+
+            <TableLayout
+                android:id="@+id/headTableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"/>
+
+            <ScrollView
+                android:id="@+id/weightScrollView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"
+                android:layout_margin="10dp">
+
+                <TableLayout
+                    android:id="@+id/weightTableLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:isScrollContainer="true"/>
+
+            </ScrollView>
+
+        </LinearLayout>
 
     </LinearLayout>
-
-    <ScrollView
-        android:id="@+id/weightScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/addNewWeightLayout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:scrollbars="vertical"
-        android:paddingBottom="250dp">
-
-        <TableLayout
-            android:id="@+id/weightTableLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:isScrollContainer="true"/>
-
-    </ScrollView>
 
     <ImageView
         android:id="@+id/goalAchievedBackground"

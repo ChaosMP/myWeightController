@@ -10,10 +10,14 @@
     <color name="goal_achieve_background">#8A010C29</color>
     <color name="chart_line_color">#155503</color>
     <color name="chart_circle_color">#155503</color>
-    <color name="light_green">#ADF897</color>
-    <color name="very_light_green">#E3F8DD</color>
+    <color name="gradient_dark">#84B874</color>
+    <color name="gradient_light">#C6EABD</color>
+    <color name="light_green">#DCF8D4</color>
+    <color name="very_light_green">#EDF6EB</color>
     <color name="dark_gray">#101010</color>
     <color name="light_gray">#454545</color>
     <color name="dark_green">#196A02</color>
+    <color name="very_dark_green">#15320B</color>
+    <color name="not_very_dark_green">#164906</color>
     <color name="dark_red">#8F0202</color>
 </resources>
